@@ -1,23 +1,26 @@
 {
-    "metadata": {
-        "name": "Mimi Hentai",
-        "author": "Zack",
-        "version": 2,
-        "source": "https://mimihentai.com",
-        "regexp": "(www.)?mimihentai.com/g/\\d+",
-        "description": "Extension đọc truyện tranh 18+ từ mimihentai.com",
-        "locale": "vi_VN",
-        "language": "javascript",
-        "type": "comic",
-        "tag": "nsfw"
-    },
-    "script": {
-        "home": "home.js",
-        "genre": "genres.js",
-        "detail": "detail.js",
-        "toc": "toc.js",
-        "chap": "chap.js",
-        "suggest": "suggest.js",
-        "search": "search.js"
-    }
+    "name": "Mimi Hentai",
+    "author": "Zack",
+    "version": 2,
+    "description": "Extension đọc truyện tranh 18+ từ mimihentai.com",
+    "source": "https://mimihentai.com",
+    "regexp": "(www\\.)?mimihentai\\.com/g/\\d+",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "comic",
+    "tag": "nsfw",
+    "plugins": [
+        {
+            "name": "MimiHentai",
+            "scripts": {
+                "home": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/home.js",
+                "genre": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/genres.js",
+                "detail": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/detail.js",
+                "toc": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/toc.js",
+                "chap": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/chap.js",
+                "suggest": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/suggest.js",
+                "search": "https://raw.githubusercontent.com/NhatMinh-deb/mimihentai-extension/main/search.js"
+            }
+        }
+    ]
 }
