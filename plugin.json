@@ -1,7 +1,7 @@
 {
     "metadata": {
         "name": "Mimi Hentai",
-        "author": "Zack",
+        "author": "vBook",
         "version": 3,
         "source": "https://mimihentai.com",
         "regexp": "(www\\.)?mimihentai\\.com/(g|view)/\\d+",
@@ -11,12 +11,12 @@
         "tag": "nsfw"
     },
     "script": {
-        "home": "src/home.js",
-        "genre": "src/genres.js",
-        "detail": "src/detail.js",
-        "toc": "src/toc.js",
-        "chap": "src/chap.js",
-        "suggest": "src/suggest.js",
-        "search": "src/search.js"
+        "home": "home.js",
+        "genre": "genres.js",
+        "detail": "detail.js",
+        "toc": "toc.js",
+        "chap": "chap.js",
+        "suggest": "suggest.js",
+        "search": "search.js"
     }
 }
