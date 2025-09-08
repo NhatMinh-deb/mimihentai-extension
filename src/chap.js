@@ -12,7 +12,7 @@ function execute(url) {
     var json = response.json();
 
     // Debug thử
-    Console.log(JSON.stringify(json));
+    Console.log("URL chương: " + url);
 
     try {
         var json = JSON.parse(response);
