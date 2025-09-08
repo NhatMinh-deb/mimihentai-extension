@@ -1,6 +1,6 @@
 function execute(url) {
-    // Lấy ID từ URL dạng: https://mimihentai.com/view/12345/1 hoặc https://mimihentai.com/g/12345
-    var match = url.match(/(?:view|g)\/(\d+)/);
+    // Lấy ID từ URL dạng: https://mimihentai.com/view/12345/1
+    var match = url.match(/view\/(\d+)/);
     if (!match) return Response.error("Không tìm thấy ID chương");
 
     var chapterId = match[1];
@@ -9,15 +9,16 @@ function execute(url) {
     var response = Http.get(apiUrl).string();
     if (!response) return Response.error("Không tải được dữ liệu API");
 
-    var json = response.json();
-
     try {
         var json = JSON.parse(response);
+
+        // Kiểm tra dữ liệu trả về
         if (!json.pages || json.pages.length === 0) {
             return Response.error("Không tìm thấy ảnh trong chapter");
         }
 
-        var imgs = json.pages.map(function(e) {
+        // Xử lý link ảnh (nếu thiếu domain)
+        var imgs = json.pages.map(e => {
             return e.startsWith("http") ? e : "https://cdn.mimihentai.com/scraped-chapter/" + e;
         });
 
