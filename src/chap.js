@@ -9,6 +9,11 @@ function execute(url) {
     var response = Http.get(apiUrl).string();
     if (!response) return Response.error("Không tải được dữ liệu API");
 
+    var json = response.json();
+
+    // Debug thử
+    Console.log(JSON.stringify(json));
+
     try {
         var json = JSON.parse(response);
         if (!json.pages || json.pages.length === 0) {
