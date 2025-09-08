@@ -1,22 +1,23 @@
 {
     "metadata": {
-        "name": "Mimi Hentai",
-        "author": "vBook",
-        "version": 3,
-        "source": "https://mimihentai.com",
-        "regexp": "(www\\.)?mimihentai\\.com/(g|view)/\\d+",
-        "description": "Extension đọc truyện tranh 18+ từ mimihentai.com",
-        "locale": "vi_VN",
-        "type": "comic",
-        "tag": "nsfw"
+            "name": "Mimi Hentai",
+            "author": "NhatMinh",
+            "version": 2,
+            "source": "https://mimihentai.com",
+            "regexp": "(www.)?mimihentai.com/g/\\d+",
+            "description": "Extension đọc truyện tranh 18+ từ mimihentai.com",
+            "locale": "vi_VN",
+            "language": "javascript",
+            "type": "comic",
+            "tag": "nsfw"
     },
     "script": {
-        "home": "src/home.js",
-        "genre": "src/genres.js",
-        "detail": "src/detail.js",
-        "toc": "src/toc.js",
-        "chap": "src/chap.js",
-        "suggest": "src/suggest.js",
-        "search": "src/search.js"
+            "home": "src/home.js",
+            "genre": "src/genres.js",
+            "detail": "src/detail.js",
+            "toc": "src/toc.js",
+            "chap": "src/chap.js",
+            "suggest": "src/suggest.js",
+            "search": "src/search.js"
     }
 }
