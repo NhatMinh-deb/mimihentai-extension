@@ -1,14 +1,27 @@
 function execute(url) {
+    // Log URL đầu vào để debug
+    Console.log("URL input: " + url);
+    
     // Lấy ID chapter từ URL
     var chapterId = url.match(/chapter\/([^?/]+)/);
     if (!chapterId) return Response.error("Không tìm được ID chapter");
     chapterId = chapterId[1];
+    Console.log("Chapter ID: " + chapterId);
 
     // Thử lấy ảnh từ API trước
     try {
-        var apiResponse = Http.get('https://mimihentai.com/api/v1/manga/chapter?id=' + chapterId).json();
-        if (apiResponse && apiResponse.pages && apiResponse.pages.length > 0) {
-            var imgs = apiResponse.pages.map(function(page) {
+        var apiUrl = 'https://mimihentai.com/api/v1/manga/chapter?id=' + chapterId;
+        Console.log("Calling API: " + apiUrl);
+        
+        var response = Http.get(apiUrl);
+        Console.log("API Response Status: " + response.status);
+        Console.log("API Response Body: " + response.body);
+        
+        var apiResponse = response.json();
+        
+        if (apiResponse && apiResponse.data && apiResponse.data.pages && apiResponse.data.pages.length > 0) {
+            Console.log("Found " + apiResponse.data.pages.length + " images from API");
+            var imgs = apiResponse.data.pages.map(function(page) {
                 return {
                     url: page,
                     headers: {
@@ -17,8 +30,11 @@ function execute(url) {
                 };
             });
             return Response.success(imgs);
+        } else {
+            Console.log("API returned empty or invalid response");
         }
     } catch (e) {
+        Console.log("API Error: " + e.toString());
         // Nếu API lỗi hoặc trả về 404, tiếp tục với cách cũ
     }
 
