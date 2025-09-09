@@ -1,36 +1,43 @@
 function execute(url) {
-    // Lấy ID từ URL dạng: https://mimihentai.com/view/12345/1
-    var match = url.match(/view\/(\d+)/);
-    if (!match) return Response.error("Không tìm thấy ID chương");
+    // Lấy ID chapter từ URL
+    var chapterId = url.match(/chapter\/([^?/]+)/);
+    if (!chapterId) return Response.error("Không tìm được ID chapter");
+    chapterId = chapterId[1];
 
-    var chapterId = match[1];
-    var apiUrl = "https://mimihentai.com/api/v1/manga/chapter?id=" + chapterId;
-
-    var response = Http.get(apiUrl).string();
-    if (!response) return Response.error("Không tải được dữ liệu API");
-
+    // Thử lấy ảnh từ API trước
     try {
-        var json = JSON.parse(response);
-
-        // Kiểm tra dữ liệu trả về
-        if (!json.pages || json.pages.length === 0) {
-            return Response.error("Không tìm thấy ảnh trong chapter");
+        var apiResponse = Http.get('https://mimihentai.com/api/v1/manga/chapter?id=' + chapterId).json();
+        if (apiResponse && apiResponse.pages && apiResponse.pages.length > 0) {
+            var imgs = apiResponse.pages.map(function(page) {
+                return {
+                    url: page,
+                    headers: {
+                        "Referer": "https://mimihentai.com/"
+                    }
+                };
+            });
+            return Response.success(imgs);
         }
-
-        // Tạo danh sách ảnh kèm header
-        var imgs = json.pages.map(function(e) {
-            var link = e.startsWith("http") ? e : "https://cdn.mimihentai.com/scraped-chapter/" + e;
-            return {
-                url: link,
-                headers: {
-                    "Referer": "https://mimihentai.com/",
-                    "User-Agent": "Mozilla/5.0"
-                }
-            };
-        });
-
-        return Response.success(imgs);
     } catch (e) {
-        return Response.error("Lỗi parse JSON: " + e.message);
+        // Nếu API lỗi hoặc trả về 404, tiếp tục với cách cũ
     }
+
+    // Fallback: Lấy ảnh từ HTML nếu API không hoạt động
+    var doc = Http.get(url).html();
+    if (!doc) return Response.error("Không tải được trang");
+
+    var imgs = doc.select("div.chapter-content img").map(function(e) {
+        return {
+            url: e.attr("src"),
+            headers: {
+                "Referer": "https://mimihentai.com/"
+            }
+        };
+    });
+
+    if (!imgs || imgs.length === 0) {
+        return Response.error("Không tìm thấy ảnh trong chapter");
+    }
+
+    return Response.success(imgs);
 }
