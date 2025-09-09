@@ -17,9 +17,16 @@ function execute(url) {
             return Response.error("Không tìm thấy ảnh trong chapter");
         }
 
-        // Xử lý link ảnh (nếu thiếu domain)
-        var imgs = json.pages.map(e => {
-            return e.startsWith("http") ? e : "https://cdn.mimihentai.com/scraped-chapter/" + e;
+        // Tạo danh sách ảnh kèm header
+        var imgs = json.pages.map(function(e) {
+            var link = e.startsWith("http") ? e : "https://cdn.mimihentai.com/scraped-chapter/" + e;
+            return {
+                url: link,
+                headers: {
+                    "Referer": "https://mimihentai.com/",
+                    "User-Agent": "Mozilla/5.0"
+                }
+            };
         });
 
         return Response.success(imgs);
